@@ -1,0 +1,17 @@
+# Operating system and local editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Scratch, generated logs and local secrets
+*.log
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+coverage/
+__pycache__/
+*.pyc
