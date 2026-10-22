@@ -1,13 +1,13 @@
 # Changelog
 
-## V8.1 — 2026-10-19
+## V8.2 — 2026-10-22
 
-- Reworked mobile market, trading, intelligence and holder views.
-- Displayed token prices and holdings in simulated USDT (U); trading settles in virtual BNB.
-- Added 444-round endgame results, grading, drawdown and shareable PNG report.
-- Added tutorial and JSON save export/import.
-- Improved retail, KOL, whale, smart-money and delayed copy-trading simulation.
-- Corrected creator genesis inventory allocation to avoid free immediately sellable player tokens.
-- Added bilingual whitepaper and documentation.
+- Removed 444-round stop and enabled endless pause/resume with rolling bounded history.
+- Changed the initial player balance from 10,000 to **100 virtual BNB**.
+- Added editable creator buy/sell taxes, treasury-funded repurchase, buy-and-burn and token accounting.
+- Added current-market ROI leaderboard and browser-local historical score ranking.
+- Versioned saves as MEMELAB_V82 and updated bilingual whitepaper.
 
-All token balances and events are fictional; this is not an on-chain exchange.
+## V8.1
+
+- Mobile-friendly terminal, 444-round report, onboarding, agent trading, JSON save export and PNG results.
