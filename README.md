@@ -1,4 +1,4 @@
-# MEME.LAB V8.2 — Endless Meme Market Simulator
+# MEME.LAB V8.2.1 — Endless Meme Market Simulator
 
 **中文 / English** · Open-source, browser-based, offline single-player meme-token simulation.
 
@@ -40,3 +40,11 @@ All funds, trades, events, wallets and token figures are **fictional**. No actua
 ## Open source
 
 MIT License © 2026 zsf11221. See [LICENSE](LICENSE).
+
+## FDV and Burn Accounting / 市值与销毁对账
+
+- Same-round audit for token price, genesis supply, permanently burned supply and remaining total supply.
+- Unburned FDV = spot USDT price × (1,000,000,000 − burned tokens).
+- Estimated circulating valuation excludes protocol-locked and treasury-held buyback tokens; treasury-held tokens are **not burned**.
+- A 99% burn allocation applies to **future tax-funded repurchase budgets**, not 99% of all tokens.
+- This update preserves V8.2 market mechanics and existing saves.
