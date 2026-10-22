@@ -1,5 +1,12 @@
 # Changelog
 
+## V8.2.1 — 2026-10-22
+
+- Added auditable same-round FDV reconciliation, showing burn value and accurate unburned supply.
+- Clarified circulating valuation, treasury buyback holdings, and prospective tax allocation.
+- Updated whitepaper and market cap labels for consistent supply accounting.
+
+
 ## V8.2 — 2026-10-22
 
 - Removed 444-round stop and enabled endless pause/resume with rolling bounded history.
