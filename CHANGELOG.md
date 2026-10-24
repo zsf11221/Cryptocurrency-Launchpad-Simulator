@@ -1,20 +1,14 @@
 # Changelog
 
-## V8.2.1 — 2026-10-22
+## 8.3 — Optional AI Market Director
 
-- Added auditable same-round FDV reconciliation, showing burn value and accurate unburned supply.
-- Clarified circulating valuation, treasury buyback holdings, and prospective tax allocation.
-- Updated whitepaper and market cap labels for consistent supply accounting.
+- Optional server-side AI market story and bounded KOL/whale trade signals, every 20 rounds at most.
+- OpenAI-compatible provider integration through a Netlify Function; model/API URL/key configurable via private Netlify environment variables.
+- Strict server request limits, response validation, request timeout, optional separate access code and per-IP rate limiting.
+- Added AI control panel to desktop and mobile 情报 view; local fallback when unavailable.
+- Kept V8.2.1 FDV and burn audit, infinite rounds, 100 virtual BNB start, treasury tokenomics and local rankings.
+- AI prices and trades are never authoritative: transactions still use the simulated AMM and finite wallets.
 
+## 8.2.1 — FDV and burn audit
 
-## V8.2 — 2026-10-22
-
-- Removed 444-round stop and enabled endless pause/resume with rolling bounded history.
-- Changed the initial player balance from 10,000 to **100 virtual BNB**.
-- Added editable creator buy/sell taxes, treasury-funded repurchase, buy-and-burn and token accounting.
-- Added current-market ROI leaderboard and browser-local historical score ranking.
-- Versioned saves as MEMELAB_V82 and updated bilingual whitepaper.
-
-## V8.1
-
-- Mobile-friendly terminal, 444-round report, onboarding, agent trading, JSON save export and PNG results.
+- Explicit supply and valuation reconciliation using the same-round source ledger.
