@@ -1,50 +1,35 @@
-# MEME.LAB V8.2.1 — Endless Meme Market Simulator
+# MEME.LAB V8.3 — AI Market Director
 
-**中文 / English** · Open-source, browser-based, offline single-player meme-token simulation.
+Open-source, fictional BNB-based Meme token market simulator with unlimited rounds, a 100 BNB virtual start, adjustable buy/sell taxes, treasury buybacks/burns, precise FDV audit and local leaderboards.
 
-[▶ Play MEME.LAB](https://zsf11221.github.io/Cryptocurrency-Launchpad-Simulator/) · [白皮书 / Whitepaper](https://zsf11221.github.io/Cryptocurrency-Launchpad-Simulator/whitepaper.html) · [Creator @zsf11221](https://x.com/zsf11221)
+V8.3 adds **optional AI-directed market narratives and bounded role decisions**, without changing the pricing or supply ledger. Everything is simulated; this is not an exchange and contains no real-world endorsement.
 
-## V8.2 — What's new / 更新
+## Play
 
-- **♾️ Unlimited rounds / 无限制回合.** Pause, resume, step or run at 1×, 2×, 5×. No forced finish after round 444.
-- **100 virtual BNB** in the player wallet (formerly 10,000).
-- **Token launch settings:** buy and sell tax each 0–10% (default 2% / 2%), treasury buy-and-burn (default 50% of collected fees) and buyback-to-hold (30%). Allocations must sum to 100% or less.
-- **Taxes are actual simulation-accounting transfers.** Gross virtual BNB is debited, net BNB enters the pool, tax is credited to the treasury. The treasury periodically trades BNB for tokens, burning or holding its purchases.
-- **Token accounting:** traders + AMM/curve pool + protocol locks + treasury-held tokens + all burned tokens = original 1,000,000,000 token genesis supply.
-- **Rankings:** Top-100 token holders, market-wallet ROI leaderboard and a historical **browser-local** leaderboard (minimum 30 rounds to save a result).
-- Token prices and portfolio value are shown in simulated USDT (U), while orders settle in simulated BNB.
-- Existing smart money, KOL, whale, delayed copy trader and narrative-event system retained.
-- Save/load with JSON import/export, local autosave and a shareable PNG scorecard.
-- Mobile market, trade, intelligence and holders tabs retained.
+- Open `index.html` for fully offline game (AI disabled/fallback).
+- Use Netlify Git deployment for AI mode. GitHub Pages can serve the game but **not** the Netlify Function; AI cannot run on GitHub Pages alone.
+- [Whitepaper](whitepaper.html) and [Changelog](CHANGELOG.md).
 
-## Run locally or deploy / 运行和部署
+## AI integration (OpenAI-compatible Chat Completions)
 
-Open `index.html` directly, or enable GitHub Pages under **Settings → Pages → Deploy from a branch → main → /(root)**. No build command, backend, token wallet or dependencies are required.
+1. Connect `zsf11221/Cryptocurrency-Launchpad-Simulator` to Netlify and use the included `netlify.toml` settings. **Do not use a drag-and-drop-only deploy for functions.**
+2. In **Netlify → Site configuration → Environment variables**, set `AI_API_BASE_URL` (e.g. `https://api.openai.com/v1`), `AI_MODEL`, `AI_API_KEY` (a NEW, rotated provider key) and `AI_ACCESS_TOKEN` (a separate private visitor access code, NOT the provider's API key). Use Functions runtime scope, then redeploy. Never place secrets in any tracked file, README, URL, browser console or chat.
+3. Open the deployed game, launch a token, go to **情报 → AI 市场导演**. Enable AI, enter the private visitor access code and check connection. Every 20 rounds it makes at most one non-blocking request, plus an explicitly requested manual test. AI server failures fall back to local game rules. The Function endpoint is `/api/market-director`.
+4. For provider models requiring `max_completion_tokens` rather than `max_tokens`, set `AI_TOKEN_PARAM=max_completion_tokens` and redeploy.
+5. Set a **hard monthly spending cap** in your API provider dashboard and Netlify usage alerts. Per-IP rate limiting is not a shared/global budget guarantee.
 
-## Accounting and player safety / 财务模拟说明
+**Access safety:** the provider key is used only by `netlify/functions/market-director.mjs` on the server. In default private mode, requests also require `AI_ACCESS_TOKEN` entered manually by the authorized tester; the client never persists this passcode. Setting `AI_PUBLIC_MODE=true` allows unauthenticated access only when `AI_ACCESS_TOKEN` is absent. Avoid public mode with a personal paid API key until using dedicated authentication and a globally enforced allowance.
 
-- **Buy:** BNB paid by the agent is split into configured tax and net pool input; the actual token amount follows the simplified bonding curve or AMM.
-- **Sell:** Tokens enter the pool; the BNB payout is split into the player's proceeds and configured tax.
-- **Treasury:** Every eight rounds, treasury-funded token purchases may be executed subject to its virtual BNB balance. Burn allocation permanently removes purchased tokens; buyback allocation retains purchased tokens in the treasury.
-- **Supply:** Total genesis issuance remains 1B; simulated valuation uses circulating unburned supply, not a real token market cap. BNB/USDT is a static in-game reference quote.
-- **Persistence:** V8.2 saves are separate from V8.1 because the tokenomics and starting assets changed. Charts retain approximately 900 most recent candles for bounded memory usage.
+**Deployment separation:** `netlify.toml` copies just `index.html` and `whitepaper.html` into `dist/`, leaving Function code outside the public directory. GitHub Pages continues to load root `index.html`, but will use local AI fallback.
 
-## Leaderboard limitations
+## Game engine invariants
 
-The ROI ranking compares current AI wallets and the player using *simulated, marked-to-market values*. Historical results are saved **only in the current browser**; they are **not an online/global ranking** and are not tamper-proof. A global board requires authenticated players and authoritative server-side simulation.
+- AI response is a compact structured directive: `headline`, `detail`, `type`, `intensity`, `kol`, `whale`.
+- Local validation restricts actions to `buy/sell/hold`, strengths to 1–3, and restricts transaction sizes to available wallets.
+- AI cannot directly change pool price, the 1B original token supply, tax balances, LP share ownership, wallets or burned balances.
+- Late AI replies expire; idle/paused games never require an external model to progress. Imported V8.2/V8.2.1 saves turn AI off until explicitly re-enabled.
+- Local rankings are **not** an online leaderboard.
 
-## Disclaimer
+## Licenses and credits
 
-All funds, trades, events, wallets and token figures are **fictional**. No actual blockchain token, wallet connection, real money or financial service is involved. Real public figures mentioned in fictional social catalysts are **not** represented as endorsing or participating. Not financial advice.
-
-## Open source
-
-MIT License © 2026 zsf11221. See [LICENSE](LICENSE).
-
-## FDV and Burn Accounting / 市值与销毁对账
-
-- Same-round audit for token price, genesis supply, permanently burned supply and remaining total supply.
-- Unburned FDV = spot USDT price × (1,000,000,000 − burned tokens).
-- Estimated circulating valuation excludes protocol-locked and treasury-held buyback tokens; treasury-held tokens are **not burned**.
-- A 99% burn allocation applies to **future tax-funded repurchase budgets**, not 99% of all tokens.
-- This update preserves V8.2 market mechanics and existing saves.
+MIT © 2026 zsf11221. See `LICENSE`. Creator: [@zsf11221](https://x.com/zsf11221).
