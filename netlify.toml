@@ -1,0 +1,6 @@
+# MEME.LAB AI — isolate published files from server-side Function sources
+[build]
+  command = "mkdir -p dist && cp index.html whitepaper.html dist/"
+  publish = "dist"
+[functions]
+  directory = "netlify/functions"
